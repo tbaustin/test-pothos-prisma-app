@@ -1,0 +1,30 @@
+{
+  "name": "test-pothos-prisma-app",
+  "version": "1.0.0",
+  "description": "test app using pothos combined with prisma",
+  "main": "index.js",
+  "scripts": {
+    "server:dev": "nodemon src/server.ts",
+    "server:start": "node -r @swc-node/register src/server.ts",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Taylor Austin",
+  "license": "ISC",
+  "devDependencies": {
+    "@swc-node/register": "^1.5.2",
+    "@swc/core": "^1.3.4",
+    "@types/node": "^18.7.23",
+    "nodemon": "^2.0.20",
+    "prisma": "^4.4.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@pothos/core": "^3.22.5",
+    "@prisma/client": "^4.4.0",
+    "apollo-server": "^3.10.2",
+    "graphql": "^16.6.0"
+  }
+}
