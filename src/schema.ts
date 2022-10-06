@@ -5,10 +5,7 @@ builder.prismaObject('User', {
   fields: (t) => ({
     id: t.exposeID("id"),
     email: t.exposeString("email"),
-    name: t.string({
-      nullable: true,
-      resolve: (user) => user.name
-    }),
+    name: t.exposeString("name", { nullable: true }),
     // Load posts as list field.
     posts: t.relation('posts', {
       args: {
@@ -20,12 +17,12 @@ builder.prismaObject('User', {
         orderBy: {
           createdAt: args.oldestFirst ? 'asc' : 'desc',
         },
-      }),
+      })
     }),
     // creates relay connection that handles pagination
     // using prisma's built in cursor based pagination
     postsConnection: t.relatedConnection('posts', {
-      cursor: 'id',
+      cursor: 'id'
     }),
     // Prisma Connection
     postsTwoConnection: t.prismaConnection(
@@ -36,7 +33,6 @@ builder.prismaObject('User', {
           console.log(`Parent: `, parent)
           console.log(`args: `, args)
           console.log(`context: `, context)
-          console.log(`info: `, info)
           return prisma.post.findMany({ ...query })
         },
       }
@@ -44,14 +40,25 @@ builder.prismaObject('User', {
   }),
 })
 
-// Create a relay node based a prisma model
-builder.prismaNode('Post', {
-  id: { field: 'id' },
+builder.prismaObject('Post', {
   fields: (t) => ({
+    id: t.exposeID('id'),
     title: t.exposeString('title'),
     author: t.relation('author'),
-  }),
-});
+    content: t.exposeString('content', { nullable: true })
+  })
+})
+
+
+// Create a relay node based a prisma model
+// WHAT IS THIS???
+// builder.prismaNode('Post', {
+//   id: { field: 'id' },
+//   fields: (t) => ({
+//     title: t.exposeString('title'),
+//     author: t.relation('author'),
+//   }),
+// });
 
 builder.queryType({
   fields: (t) => ({
@@ -87,7 +94,7 @@ builder.mutationType({
       args: {
         user: t.arg({ type: UserInput, required: true })
       },
-      resolve: (query, _root, args) => {
+      resolve: async (query, _root, args) => {
         return prisma.user.create({ 
           ...query, 
           data: args.user 
