@@ -1,25 +1,8 @@
 import { ApolloServer } from 'apollo-server';
-import SchemaBuilder from '@pothos/core';
-
-const builder = new SchemaBuilder({});
-
-
-builder.queryType({
-  fields: (t) => ({
-    hello: t.string({
-      args: {
-        name: t.arg.string(),
-        names: t.arg.stringList()
-      },
-      resolve: (parent, { name, names }) => {
-        return `hello, ${name || names?.join(", ") || 'World'}`
-      },
-    }),
-  }),
-});
+import { schema } from './schema';
 
 const server = new ApolloServer({
-  schema: builder.toSchema(),
+  schema: schema
 });
 
 server.listen().then(({ url }) => {

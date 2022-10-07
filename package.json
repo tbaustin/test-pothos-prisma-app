@@ -8,6 +8,8 @@
     "server:start": "node -r @swc-node/register src/server.ts",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
+    "generate": "npx prisma generate",
+    "migrate": "npx prisma migrate dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Taylor Austin",
@@ -23,6 +25,8 @@
   },
   "dependencies": {
     "@pothos/core": "^3.22.5",
+    "@pothos/plugin-prisma": "^3.35.4",
+    "@pothos/plugin-relay": "^3.28.4",
     "@prisma/client": "^4.4.0",
     "apollo-server": "^3.10.2",
     "graphql": "^16.6.0"
